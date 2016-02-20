@@ -1,4 +1,4 @@
-package com.equaks.elastic;
+package com.eguaks.elastic;
 
 import java.time.LocalDate;
 

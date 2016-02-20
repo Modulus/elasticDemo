@@ -1,4 +1,4 @@
-package com.equaks.elastic;
+package com.eguaks.elastic;
 
 /**
  * Created by Modulus on 20.02.2016.
