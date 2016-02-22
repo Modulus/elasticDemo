@@ -1,9 +1,7 @@
 package com.eguaks.elastic.converters;
 
-import com.eguaks.elastic.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sun.net.www.content.text.Generic;
 
 import java.io.IOException;
 

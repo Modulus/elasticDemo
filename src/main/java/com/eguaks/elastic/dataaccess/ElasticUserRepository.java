@@ -74,15 +74,7 @@ public class ElasticUserRepository {
         try {
             //You can emit the sizes here
 
-            SearchRequestBuilder srb1 = client.prepareSearch(INDEX_NAME).setQuery(QueryBuilders.termQuery("id", id)).setSize(100);
-            SearchRequestBuilder srb2 = client.prepareSearch(INDEX_NAME).setQuery(QueryBuilders.termQuery("userName", name)).setSize(100);
-//
-//            SearchResponse response = client.prepareSearch("users")
-//                    .setQuery(QueryBuilders.termQuery("id", id)).setFrom(0).setSize(60).setExplain(true).execute().get();
-            MultiSearchResponse responses = client.prepareMultiSearch()
-                    .add(srb1)
-                    .add(srb2)
-                    .execute().get();
+            MultiSearchResponse responses = findMultiSearch(id, name);
             if(responses.getResponses() !=  null && responses.getResponses().length > 0){
                 for(MultiSearchResponse.Item item : responses.getResponses()){
                     SearchResponse response = item.getResponse();
@@ -103,5 +95,26 @@ public class ElasticUserRepository {
             return users;
         }
 
+    }
+
+    private MultiSearchResponse findMultiSearch(String id, String name) throws InterruptedException, ExecutionException {
+        SearchRequestBuilder srb1 = client.prepareSearch(INDEX_NAME).setQuery(QueryBuilders.termQuery("id", id)).setSize(100);
+        SearchRequestBuilder srb2 = client.prepareSearch(INDEX_NAME).setQuery(QueryBuilders.termQuery("userName", name)).setSize(100);
+
+        return client.prepareMultiSearch()
+                .add(srb1)
+                .add(srb2)
+                .execute().get();
+    }
+
+    public boolean delete(String id){
+        try {
+            MultiSearchResponse responses = findMultiSearch(id, null);
+        } catch (InterruptedException e) {
+            return false;
+        } catch (ExecutionException e) {
+            return false;
+        }
+        return false;
     }
 }
